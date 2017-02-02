@@ -9,6 +9,7 @@ abstract class PipelineScript extends Script{
         c.delegate = this;
         c.resolveStrategy = Closure.DELEGATE_FIRST
         c()
+        println "Exiting stage ${name}"
     }
 
     def docker(Closure c){
