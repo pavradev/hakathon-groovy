@@ -1,5 +1,3 @@
-@Grab('de.gesellix:docker-client:2016-10-07T18-47-59')
-
 import de.gesellix.docker.client.DockerClientImpl
 
 def dockerClient = new DockerClientImpl()
