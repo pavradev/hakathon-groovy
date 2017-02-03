@@ -1,8 +1,20 @@
+import de.gesellix.docker.client.DockerClientImpl
+
 /**
  * Created by pavel on 16/10/16.
  */
 abstract class PipelineScript extends Script{
     List<Docker> commands = []
+
+    String APP_DIR = 'work_dir'
+
+    PipelineScript(){
+        def id = System.getenv("HOSTNAME")
+        println id
+        def dockerClient = new DockerClientImpl()
+        List<String> binds = dockerClient.inspectContainer(id).content.HostConfig.Binds
+        APP_DIR = binds.find {it =~ /.*:\/app$/} - ':/app'
+    }
 
     def stage(String name, Closure c){
         println "Entering stage ${name}"
@@ -13,7 +25,7 @@ abstract class PipelineScript extends Script{
     }
 
     def docker(Closure c){
-        Docker d = new Docker()
+        Docker d = new Docker(appDir : APP_DIR)
         c.delegate = d
         c.resolveStrategy = Closure.DELEGATE_FIRST
         c.call()

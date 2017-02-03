@@ -7,8 +7,18 @@
  * user guide available at https://docs.gradle.org/2.13/userguide/tutorial_groovy_projects.html
  */
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
 // Apply the groovy plugin to add support for Groovy
 apply plugin: 'groovy'
+apply plugin: 'gradle-one-jar'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -26,4 +36,8 @@ dependencies {
     // We use the awesome Spock testing and specification framework
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'junit:junit:4.12'
+}
+
+task oneJar(type: OneJar) {
+    mainClass = 'DslScriptLoader'
 }
