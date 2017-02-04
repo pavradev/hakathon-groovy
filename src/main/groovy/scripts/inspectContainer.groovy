@@ -1,3 +1,5 @@
+package scripts
+
 import de.gesellix.docker.client.DockerClientImpl
 
 /**
